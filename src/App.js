@@ -1,26 +1,27 @@
 
 
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import UserEntry from './UserEntry';
 import { UserStateContext, UserStateReducerContext } from './userContext';
+import { addUser, getAllUsers } from './UserClient';
 
 const App = () => {
 
   const users = useContext(UserStateContext)
   const dispatch = useContext(UserStateReducerContext);
 
+  useEffect(() => {
+    getAllUsers(dispatch);
+  }, [dispatch])
+
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch({
-      "type": "insert",
-      "name": e.target.elements.name.value,
-      "college": e.target.elements.college.value
-    })
+    addUser(e.target.elements.name.value, e.target.elements.college.value, dispatch)
   }
 
   const getUserListHtml = () => {
     return users.map(elem => 
-      <UserEntry name={elem.Name} college={elem.College} grad_year={2020}/>
+      <UserEntry key={elem.id} id={elem.id} name={elem.name} college={elem.college} grad_year={2020}/>
     );
   }
 

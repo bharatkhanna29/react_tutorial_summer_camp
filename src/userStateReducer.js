@@ -1,33 +1,12 @@
-const initialUserState = [
-    {
-      "Name": "Pranav Bansal",
-      "College": "LPU"
-    },
-    {
-      "Name": "Satish Kumar",
-      "College": "University College of engineering and technology "
-    },
-    {
-      "Name": "Prerna Choudhary",
-      "College": "KIET"
-    }
-];
+const initialUserState = [];
 
 const userStateReducer = (state, action) => {
     switch (action.type) {
-        case "delete": 
-            return state.filter(user => user.Name !== action.name)
-        case "insert":
-            return [
-                ...state,
-                {
-                    "Name": action.name,
-                    "College": action.college
-                }
-            ]
         case "edit": 
-            state.filter(user => user.Name === action.name)[0][action.property] = action.newValue
+            state.filter(user => user.name === action.name)[0][action.property] = action.newValue
             return [...state]
+        case "create":
+            return [...action.data]
         default: 
             console.log("Not supported")
     }
